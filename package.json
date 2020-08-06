@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Abhyudyabajpai/Node_js_project/issues"
   },
-  "homepage": "https://github.com/Abhyudyabajpai/Node_js_project#readme"
+  "homepage": "https://github.com/Abhyudyabajpai/Node_js_project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
