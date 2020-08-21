@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "project1": "nodemon index.js",
+    "myapp": "npm run start --prefix myapp",
+    "dev": "concurrently \"npm run project1\" \"npm run myapp\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   },
   "homepage": "https://github.com/Abhyudyabajpai/Node_js_project#readme",
   "dependencies": {
+    "concurrently": "^5.3.0",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.29",
