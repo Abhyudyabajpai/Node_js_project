@@ -11,7 +11,9 @@
     "start": "node index.js",
     "project1": "nodemon index.js",
     "myapp": "npm run start --prefix myapp",
-    "dev": "concurrently \"npm run project1\" \"npm run myapp\""
+    "dev": "concurrently \"npm run project1\" \"npm run myapp\"",
+    "heroku-postbuild": "NPM_CONFIG-PRODUCTION=false npm install --prefix myapp && npm run build --prefix myapp"
+
   },
   "repository": {
     "type": "git",
