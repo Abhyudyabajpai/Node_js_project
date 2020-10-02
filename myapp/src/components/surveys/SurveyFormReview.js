@@ -6,7 +6,7 @@ import * as actions from '../../actions';
 const SurveyFormReview = ({onCancel, formValues, submitSurvey}) => {
     const reviewFields = _.map(formFields, ({name, label}) => {
         return (
-            <div>
+            <div key={name}>
                 <label>{label}</label>
                 <div>
                     {formValues[name]}
