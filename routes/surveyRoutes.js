@@ -14,11 +14,31 @@ module.exports = app => {
     });
 
     app.post('/api/surveys/webhooks',(req,res) => {
-        const events =_.map(req.body, (event) =>{
-            const pathname = new URL(event.url).pathname;
-            const p = new Path('/api/surveys/:surveyId/:choice');
-            console.log(p.test(pathname));
-        });
+        const p = new Path('/api/surveys/:surveyId/:choice');
+        _.chain(req.body)
+              .map(({email,url}) =>{
+            const match = p.test(new URL(url).pathname);
+            if (match) {
+                return {email, surveyId: match.surveyId, choice: match.choice}
+            }
+        })
+        .compact()
+        .uniqBy('email','surveyId')
+        .each(({ surveyId,email,choice }) => {
+            Survey.updateOne({
+                _id: surveyId,
+                recipients: {
+                    $elemMatch: { email: email, responded: false}
+                }
+            },{
+                $inc: {[choice]:1},
+                $set: {'recipients.$.responded': true}
+            }
+            ).exec();
+        })
+        .value()
+
+        res.send({});
     });
     app.post('/api/surveys',requireLogin,requireCredits, async (req,res) =>{
         const {title,subject,body,recipients} = req.body;
